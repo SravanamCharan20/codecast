@@ -36,7 +36,7 @@ app.use(express.json());
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",  // Update this to your deployed frontend URL in Render
+    origin: "https://codecast-5du1.onrender.com",  
     methods: ["GET", "POST"],
   },
 });
