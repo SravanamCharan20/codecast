@@ -8,6 +8,7 @@ const axios = require("axios");
 const server = http.createServer(app);
 require("dotenv").config();
 
+// Language configuration for the API (ensure you have your supported languages here)
 const languageConfig = {
   python3: { versionIndex: "3" },
   java: { versionIndex: "3" },
@@ -35,7 +36,7 @@ app.use(express.json());
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "http://localhost:3000",  // Update this to your deployed frontend URL in Render
     methods: ["GET", "POST"],
   },
 });
@@ -53,12 +54,10 @@ const getAllConnectedClients = (roomId) => {
 };
 
 io.on("connection", (socket) => {
-  // console.log('Socket connected', socket.id);
   socket.on(ACTIONS.JOIN, ({ roomId, username }) => {
     userSocketMap[socket.id] = username;
     socket.join(roomId);
     const clients = getAllConnectedClients(roomId);
-    // notify that new user join
     clients.forEach(({ socketId }) => {
       io.to(socketId).emit(ACTIONS.JOINED, {
         clients,
@@ -68,19 +67,16 @@ io.on("connection", (socket) => {
     });
   });
 
-  // sync the code
   socket.on(ACTIONS.CODE_CHANGE, ({ roomId, code }) => {
     socket.in(roomId).emit(ACTIONS.CODE_CHANGE, { code });
   });
-  // when new user join the room all the code which are there are also shows on that persons editor
+
   socket.on(ACTIONS.SYNC_CODE, ({ socketId, code }) => {
     io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code });
   });
 
-  // leave room
   socket.on("disconnecting", () => {
     const rooms = [...socket.rooms];
-    // leave all the room
     rooms.forEach((roomId) => {
       socket.in(roomId).emit(ACTIONS.DISCONNECTED, {
         socketId: socket.id,
@@ -113,4 +109,4 @@ app.post("/compile", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
-server.listen(PORT, () => console.log(`Server is runnint on port ${PORT}`));
+server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { FaDoorOpen, FaUser, FaPlusCircle } from "react-icons/fa";
+import { FaDoorOpen, FaUser } from "react-icons/fa";
 import { IoIosKeypad } from "react-icons/io";
 
 

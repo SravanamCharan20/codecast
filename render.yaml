@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: server
+    env: node
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    plan: free
+    branch: main
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: jDoodle_clientId
+        value: "your-jdoodle-client-id"
+      - key: kDoodle_clientSecret
+        value: "your-jdoodle-client-secret"
+    healthCheckPath: "/"
+    autoDeploy: true
+    deployTrigger: "github"
+
+  - type: web
+    name: client
+    env: node
+    buildCommand: "npm install && npm run build"
+    startCommand: "serve -s build"
+    plan: free
+    branch: main
+    envVars:
+      - key: REACT_APP_API_URL
+        value: "https://codecast-5du1.onrender.com"  
+    healthCheckPath: "/"
+    autoDeploy: true
+    deployTrigger: "github"
