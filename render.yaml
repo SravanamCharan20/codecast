@@ -1,4 +1,5 @@
 services:
+  # Backend service (Node.js/Express)
   - type: web
     name: server
     env: node
@@ -9,16 +10,12 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 3001
-      - key: jDoodle_clientId
-        value: "your-jdoodle-client-id"
-      - key: kDoodle_clientSecret
-        value: "your-jdoodle-client-secret"
+      - key: REACT_APP_BACKEND_URL
+        value: "https://codecast-5du1.onrender.com"  # Updated to your backend URL
     healthCheckPath: "/"
     autoDeploy: true
-    deployTrigger: "github"
 
+  # Frontend service (React)
   - type: web
     name: client
     env: node
@@ -27,8 +24,7 @@ services:
     plan: free
     branch: main
     envVars:
-      - key: REACT_APP_API_URL
-        value: "https://codecast-5du1.onrender.com"  
+      - key: REACT_APP_BACKEND_URL
+        value: "https://codecast-5du1.onrender.com"  # Updated to your backend URL
     healthCheckPath: "/"
     autoDeploy: true
-    deployTrigger: "github"
