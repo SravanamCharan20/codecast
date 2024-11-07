@@ -21,7 +21,7 @@ CodeCast is a real-time code collaboration web application that allows multiple 
 
 ## Usage
 
-1. Open the [CodeCast live demo](https://codecast-324z.onrender.com).
+1. Open the [CodeCast live demo](https://codecast-1-trw9.onrender.com).
 2. Enter a Room ID or generate a new one.
 3. Set your username.
 4. Start collaborating with others in the same room.
